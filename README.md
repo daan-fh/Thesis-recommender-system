@@ -1,0 +1,1 @@
+Codebase for my Bachelor Thesis project 2025
