@@ -20,7 +20,11 @@ st.markdown("""
             color: white;
         }
         section[data-testid="stSidebar"] {
-        background-color: #2e2d5c;
+            background-color: #2e2d5c;
+            color: white;
+        }
+        section[data-testid="stSidebar"] * {
+            color: white !important;
         }
         div[data-testid="stButton"] > button {
             background-color: #f9f9f9;
