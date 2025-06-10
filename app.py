@@ -15,6 +15,7 @@ st.markdown("""
         }
         header[data-testid="stHeader"] {
             background-color: #2e2d5c;
+            color: white;
         }
         header[data-testid="stHeader"] .stMarkdown {
             color: white;
@@ -26,12 +27,8 @@ st.markdown("""
         section[data-testid="stSidebar"] * {
             color: white !important;
         }
-        section[data-testid="stSidebar"] button[title="Collapse sidebar"] svg,
-        section[data-testid="stSidebar"] button[title="Expand sidebar"] svg,
-        section[data-testid="stSidebar"] button[title="Collapse sidebar"] path,
-        section[data-testid="stSidebar"] button[title="Expand sidebar"] path {
-            fill: white !important;
-            stroke: white !important;
+        div[data-testid="stSidebar"] > button {
+            color: white;
         }
         div[data-testid="stButton"] > button {
             background-color: #f9f9f9;
