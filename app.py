@@ -131,11 +131,13 @@ st.markdown("""
 Welkom, hier op de startpagina zie je een overzicht van alle beschikbare projecten. Klik op **"Bekijk details"** om een specifiek project te bekijken.  
 Je krijgt dan een uitgebreidere beschrijving van het project te zien, samen met aanbevolen projecten daaronder en een toelichting op waarom deze zijn aanbevolen – een **lagere score betekent dat het aanbevolen project beter overeenkomt** met het bekeken project.  
 Bovenaan de detailpagina van een project vind je een knop om terug te keren naar de startpagina.  
-Links bovenin zie je een klein pijltje waarmee je het zijmenu kunt openen (indien het niet al open staat). In dit menu kun je de **weging van verschillende kenmerken aanpassen** (zoals prijs, grootte, locatie, enz.).  
+Links bovenin zie je een klein pijltje waarmee je het zijmenu kunt openen (indien het niet al open staat). **Afhankelijk van je browserinstellingen is dit pijltje mogelijk niet goed zichtbaar**, maar het bevindt zich links bovenaan en wordt zichtbaar wanneer je er met je muis overheen beweegt.  
+In dit menu kun je de **weging van verschillende kenmerken aanpassen** (zoals prijs, grootte, locatie, enz.).  
 Een **hogere weging betekent dat het aanbevelingssysteem meer waarde hecht** aan dat kenmerk bij het doen van aanbevelingen.
 
 Neem gerust even de tijd om door de projecten te bladeren en te beoordelen hoe accuraat en relevant je de aanbevelingen vindt.
 """)
+
 
 # Weight sliders
 st.sidebar.header("Voorkeuren voor Aanbeveling")
