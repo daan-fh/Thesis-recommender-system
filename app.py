@@ -26,6 +26,13 @@ st.markdown("""
         section[data-testid="stSidebar"] * {
             color: white !important;
         }
+        section[data-testid="stSidebar"] button[title="Collapse sidebar"] svg,
+        section[data-testid="stSidebar"] button[title="Expand sidebar"] svg,
+        section[data-testid="stSidebar"] button[title="Collapse sidebar"] path,
+        section[data-testid="stSidebar"] button[title="Expand sidebar"] path {
+            fill: white !important;
+            stroke: white !important;
+        }
         div[data-testid="stButton"] > button {
             background-color: #f9f9f9;
             color: black;
@@ -123,6 +130,15 @@ def calculate_combined_distance(index, df, weights):
 st.image("images/logo-nwn.png", width=160)
 st.title("Aanbevelingssysteem voor Nieuw Wonen Nederland")
 
+st.markdown("""
+Welkom, hier op de startpagina zie je een overzicht van alle beschikbare projecten. Klik op **"Bekijk details"** om een specifiek project te bekijken.  
+Je krijgt dan een uitgebreidere beschrijving van het project te zien, samen met aanbevolen projecten daaronder en een toelichting op waarom deze zijn aanbevolen – een **lagere score betekent dat het aanbevolen project beter overeenkomt** met het bekeken project.  
+Bovenaan de detailpagina van een project vind je een knop om terug te keren naar de startpagina.  
+Links bovenin zie je een klein pijltje waarmee je het zijmenu kunt openen (indien het niet al open staat). In dit menu kun je de **weging van verschillende kenmerken aanpassen** (zoals prijs, grootte, locatie, enz.).  
+Een **hogere weging betekent dat het aanbevelingssysteem meer waarde hecht** aan dat kenmerk bij het doen van aanbevelingen.
+
+Neem gerust even de tijd om door de projecten te bladeren en te beoordelen hoe accuraat en relevant je de aanbevelingen vindt.
+""")
 
 # Weight sliders
 st.sidebar.header("Voorkeuren voor Aanbeveling")
@@ -183,6 +199,10 @@ else:
     selected_index = st.session_state.selected_index
     selected_row = merged_df.iloc[selected_index]
 
+    if st.button("🔙 Terug naar overzicht"):
+        st.session_state.selected_index = None
+        st.rerun()
+
     st.subheader("Woningdetails")
     st.markdown(f"""
     **Stad**: {selected_row['address_city']}  
@@ -227,6 +247,4 @@ else:
         tooltip={"text": "{address_city}\n{living_space_from} m²\n{bedrooms} slaapkamers"}
     ))
 
-    if st.button("🔙 Terug naar overzicht"):
-        st.session_state.selected_index = None
-        st.rerun()
+
