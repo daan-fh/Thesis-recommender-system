@@ -128,15 +128,25 @@ st.image("images/logo-nwn.png", width=160)
 st.title("Aanbevelingssysteem voor Nieuw Wonen Nederland")
 
 st.markdown("""
-Welkom, hier op de startpagina zie je een overzicht van alle beschikbare projecten. Klik op **"Bekijk details"** om een specifiek project te bekijken.  
-Je krijgt dan een uitgebreidere beschrijving van het project te zien, samen met aanbevolen projecten daaronder en een toelichting op waarom deze zijn aanbevolen – een **lagere score betekent dat het aanbevolen project beter overeenkomt** met het bekeken project.  
-Bovenaan de detailpagina van een project vind je een knop om terug te keren naar de startpagina.  
-Links bovenin zie je een klein pijltje waarmee je het zijmenu kunt openen (indien het niet al open staat). **Afhankelijk van je browserinstellingen is dit pijltje mogelijk niet goed zichtbaar**, maar het bevindt zich links bovenaan en wordt zichtbaar wanneer je er met je muis overheen beweegt.  
-In dit menu kun je de **weging van verschillende kenmerken aanpassen** (zoals prijs, grootte, locatie, enz.).  
-Een **hogere weging betekent dat het aanbevelingssysteem meer waarde hecht** aan dat kenmerk bij het doen van aanbevelingen.
+<h4>Welkom!</h4>
 
-Neem gerust even de tijd om door de projecten te bladeren en te beoordelen hoe accuraat en relevant je de aanbevelingen vindt.
-""")
+<p>Op deze pagina zie je alle beschikbare projecten in één overzicht.<br>
+Klik op <strong>"Bekijk details"</strong> om meer informatie over een project te bekijken.</p>
+
+<h5>Op de detailpagina zie je:</h5>
+<ul>
+    <li>Een duidelijke omschrijving van het project</li>
+    <li>Vergelijkbare projecten die je mogelijk ook interessant vindt</li>
+    <li>Hoe beter het project past bij wat je bekijkt, hoe lager de score. Dat is dus goed!</li>
+</ul>
+
+<p>Wil je terug naar het overzicht? Klik dan bovenaan op <strong>"Terug naar startpagina"</strong>.</p>
+
+<p>Links bovenin zie je een klein pijltje. Daarmee open je een menu waarin je kunt aangeven wat jij belangrijk vindt (zoals prijs, grootte of locatie).
+    Zo worden de suggesties nog beter afgestemd op jouw voorkeur.</p>
+
+<p>Neem gerust even de tijd om te kijken of de voorgestelde projecten aansluiten bij wat je zoekt.</p>
+""", unsafe_allow_html=True)
 
 
 # Weight sliders
