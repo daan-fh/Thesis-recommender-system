@@ -123,6 +123,17 @@ def calculate_combined_distance(index, df, weights):
     distances.sort(key=lambda x: x[1])
     return distances[:4]
 
+def calculate_item_coverage(df, weights):
+    total_items = len(df)
+    all_recommended = set()
+
+    for idx in range(total_items):
+        recs = calculate_combined_distance(idx, df, weights)
+        all_recommended.update([r[0] for r in recs])
+
+    coverage = len(all_recommended) / total_items
+    return coverage
+
 # --- Streamlit UI ---
 st.image("images/logo-nwn.png", width=160)
 st.title("Aanbevelingssysteem voor Nieuw Wonen Nederland")
@@ -165,6 +176,13 @@ weights = {
     'text': text_weight,
 }
 
+"""with st.sidebar:
+    st.markdown("---")
+    st.markdown("### Systeemdekking (Item Coverage)")
+    with st.spinner("Berekenen..."):
+        coverage = calculate_item_coverage(merged_temp_df, weights)
+    st.metric("Item Coverage", f"{coverage:.2%}")"""
+
 if 'selected_index' not in st.session_state:
     st.session_state.selected_index = None
 
@@ -172,7 +190,7 @@ def select_property(index):
     st.session_state.selected_index = index
 
 def render_card(row, index, score_data=None):
-    city = row['address_city']
+    city = f"{row['address_city']} {index + 1}"
     price = f"{int(row['sale_price_from'])} - {int(row['sale_price_to'])} €"
     space = f"{int(row['living_space_from'])} - {int(row['living_space_to'])} m²"
     bedrooms = f"{int(row['bedrooms'])} slaapkamers"
@@ -197,6 +215,7 @@ def render_card(row, index, score_data=None):
         """)
 
     st.button("Bekijk details", key=f"select_{index}", on_click=lambda: select_property(index))
+
 
 if st.session_state.selected_index is None:
     st.subheader("Selecteer een woning om details te bekijken")
