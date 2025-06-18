@@ -176,12 +176,7 @@ weights = {
     'text': text_weight,
 }
 
-"""with st.sidebar:
-    st.markdown("---")
-    st.markdown("### Systeemdekking (Item Coverage)")
-    with st.spinner("Berekenen..."):
-        coverage = calculate_item_coverage(merged_temp_df, weights)
-    st.metric("Item Coverage", f"{coverage:.2%}")"""
+
 
 if 'selected_index' not in st.session_state:
     st.session_state.selected_index = None
