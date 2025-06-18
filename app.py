@@ -190,7 +190,7 @@ def select_property(index):
     st.session_state.selected_index = index
 
 def render_card(row, index, score_data=None):
-    city = f"{row['address_city']} {index + 1}"
+    city = row['address_city']
     price = f"{int(row['sale_price_from'])} - {int(row['sale_price_to'])} €"
     space = f"{int(row['living_space_from'])} - {int(row['living_space_to'])} m²"
     bedrooms = f"{int(row['bedrooms'])} slaapkamers"
@@ -215,7 +215,6 @@ def render_card(row, index, score_data=None):
         """)
 
     st.button("Bekijk details", key=f"select_{index}", on_click=lambda: select_property(index))
-
 
 if st.session_state.selected_index is None:
     st.subheader("Selecteer een woning om details te bekijken")
