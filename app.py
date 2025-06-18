@@ -6,6 +6,8 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import pydeck as pdk
 
+st.set_page_config(layout="centered", initial_sidebar_state="expanded")
+
 # --- Custom Styling ---
 st.markdown("""
     <style>
