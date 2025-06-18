@@ -82,6 +82,9 @@ merged_temp_df = merged_temp_df.loc[merged_df.index]
 merged_temp_df = merged_temp_df.reset_index(drop=True)
 merged_df = merged_df.reset_index(drop=True)
 
+merged_df['address_city'] = [f"{city} {i+1}" for i, city in enumerate(merged_df['address_city'])]
+merged_temp_df['address_city'] = merged_df['address_city']
+
 features = ['living_space_from', 'living_space_to', 'sale_price_from', 'sale_price_to', 'bedrooms']
 scaler = StandardScaler()
 merged_temp_df[features] = scaler.fit_transform(merged_temp_df[features])
