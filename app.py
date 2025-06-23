@@ -143,26 +143,30 @@ def calculate_item_coverage(df, weights):
 st.image("images/logo-nwn.png", width=160)
 st.title("Aanbevelingssysteem voor Nieuw Wonen Nederland")
 
-st.markdown("""
-<h4>Welkom!</h4>
+if 'selected_index' not in st.session_state:
+    st.session_state.selected_index = None
 
-<p>Op deze pagina zie je alle beschikbare projecten in één overzicht.<br>
-Klik op <strong>"Bekijk details"</strong> om meer informatie over een project te bekijken.</p>
-
-<h5>Op de detailpagina zie je:</h5>
-<ul>
-    <li>Een duidelijke omschrijving van het project</li>
-    <li>Vergelijkbare projecten die je mogelijk ook interessant vindt</li>
-    <li>Hoe beter het project past bij wat je bekijkt, hoe lager de score. Dat is dus goed!</li>
-</ul>
-
-<p>Wil je terug naar het overzicht? Klik dan bovenaan op <strong>"Terug naar startpagina"</strong>.</p>
-
-<p>Links bovenin zie je een klein pijltje. Daarmee open je een menu waarin je kunt aangeven wat jij belangrijk vindt (zoals prijs, grootte of locatie).
-    Zo worden de suggesties nog beter afgestemd op jouw voorkeur.</p>
-
-<p>Neem gerust even de tijd om te kijken of de voorgestelde projecten aansluiten bij wat je zoekt.</p>
-""", unsafe_allow_html=True)
+if st.session_state.selected_index is None:
+    st.markdown("""
+    <h4>Welkom!</h4>
+    
+    <p>Op deze pagina zie je alle beschikbare projecten in één overzicht.<br>
+    Klik op <strong>"Bekijk details"</strong> om meer informatie over een project te bekijken.</p>
+    
+    <h5>Op de detailpagina zie je:</h5>
+    <ul>
+        <li>Een duidelijke omschrijving van het project</li>
+        <li>Vergelijkbare projecten die je mogelijk ook interessant vindt</li>
+        <li>Hoe beter het project past bij wat je bekijkt, hoe lager de score. Dat is dus goed!</li>
+    </ul>
+    
+    <p>Wil je terug naar het overzicht? Klik dan bovenaan op <strong>"Terug naar startpagina"</strong>.</p>
+    
+    <p>Links bovenin zie je een klein pijltje. Daarmee open je een menu waarin je kunt aangeven wat jij belangrijk vindt (zoals prijs, grootte of locatie).
+        Zo worden de suggesties nog beter afgestemd op jouw voorkeur.</p>
+    
+    <p>Neem gerust even de tijd om te kijken of de voorgestelde projecten aansluiten bij wat je zoekt.</p>
+    """, unsafe_allow_html=True)
 
 
 # Weight sliders
