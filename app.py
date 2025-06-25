@@ -143,52 +143,38 @@ def calculate_item_coverage(df, weights):
 st.image("images/logo-nwn.png", width=160)
 st.title("Aanbevelingssysteem voor Nieuw Wonen Nederland")
 
+if 'intro_stage' not in st.session_state:
+    st.session_state.intro_stage = 'start'
 if 'selected_index' not in st.session_state:
     st.session_state.selected_index = None
 
-if st.session_state.selected_index is None:
-    st.markdown("""
-    <h4>Welkom!</h4>
-    
-    <p>Op deze pagina zie je alle beschikbare projecten in één overzicht.<br>
-    Klik op <strong>"Bekijk details"</strong> om meer informatie over een project te bekijken.</p>
-    
-    <h5>Op de detailpagina zie je:</h5>
-    <ul>
-        <li>Een duidelijke omschrijving van het project</li>
-        <li>Vergelijkbare projecten die je mogelijk ook interessant vindt</li>
-        <li>Hoe beter het project past bij wat je bekijkt, hoe lager de score. Dat is dus goed!</li>
-    </ul>
-    
-    <p>Wil je terug naar het overzicht? Klik dan bovenaan op <strong>"Terug naar startpagina"</strong>.</p>
-    
-    <p>Links bovenin zie je een klein pijltje. Daarmee open je een menu waarin je kunt aangeven wat jij belangrijk vindt (zoals prijs, grootte of locatie).
-        Zo worden de suggesties nog beter afgestemd op jouw voorkeur.</p>
-    
-    <p>Neem gerust even de tijd om te kijken of de voorgestelde projecten aansluiten bij wat je zoekt.</p>
-    """, unsafe_allow_html=True)
 
 
 # Weight sliders
-st.sidebar.header("Voorkeuren voor Aanbeveling")
-price_weight = st.sidebar.slider("Gewicht prijs", 0.0, 1.0, 0.3)
-size_weight = st.sidebar.slider("Gewicht woonoppervlakte", 0.0, 1.0, 0.3)
-bedroom_weight = st.sidebar.slider("Gewicht aantal slaapkamers", 0.0, 1.0, 0.1)
-geo_weight = st.sidebar.slider("Gewicht locatie", 0.0, 1.0, 0.2)
-text_weight = st.sidebar.slider("Gewicht tekstuele overeenkomst", 0.0, 1.0, 0.1)
+if st.session_state.intro_stage == 'adjust' or st.session_state.intro_stage == 'final':
+    st.sidebar.header("Voorkeuren voor Aanbeveling")
+    price_weight = st.sidebar.slider("Gewicht prijs", 0.0, 1.0, 0.3)
+    size_weight = st.sidebar.slider("Gewicht woonoppervlakte", 0.0, 1.0, 0.3)
+    bedroom_weight = st.sidebar.slider("Gewicht aantal slaapkamers", 0.0, 1.0, 0.1)
+    geo_weight = st.sidebar.slider("Gewicht locatie", 0.0, 1.0, 0.2)
+    text_weight = st.sidebar.slider("Gewicht tekstuele overeenkomst", 0.0, 1.0, 0.1)
 
-weights = {
-    'price': price_weight,
-    'size': size_weight,
-    'bedrooms': bedroom_weight,
-    'geo': geo_weight,
-    'text': text_weight,
-}
-
-
-
-if 'selected_index' not in st.session_state:
-    st.session_state.selected_index = None
+    weights = {
+        'price': price_weight,
+        'size': size_weight,
+        'bedrooms': bedroom_weight,
+        'geo': geo_weight,
+        'text': text_weight,
+    }
+else:
+    # Default weights if not in 'adjust' page
+    weights = {
+        'price': 0.3,
+        'size': 0.3,
+        'bedrooms': 0.1,
+        'geo': 0.2,
+        'text': 0.1,
+    }
 
 def select_property(index):
     st.session_state.selected_index = index
@@ -220,19 +206,92 @@ def render_card(row, index, score_data=None):
 
     st.button("Bekijk details", key=f"select_{index}", on_click=lambda: select_property(index))
 
-if st.session_state.selected_index is None:
+
+if st.session_state.intro_stage == 'start':
+    st.markdown("""
+    <h4>Welkom!</h4>
+
+    <p>Op deze pagina krijg je een korte uitleg over hoe dit aanbevelingssysteem werkt.<br>
+    
+    <p>Als er op enig moment iets misgaat of de pagina niet goed laadt, kun je deze gewoon verversen. Je komt dan automatisch weer op deze startpagina terecht.</p>
+    
+    <p>Om een project te bekijken klik op <strong>"Bekijk details"</strong>.</p>
+    
+    <h5>Op de detailpagina zie je:</h5>
+    <ul>
+        <li>Een duidelijke omschrijving van het project</li>
+        <li>Vergelijkbare projecten die je mogelijk ook interessant vindt</li>
+        <li>Hoe beter het project past bij wat je bekijkt, hoe lager de score. Dat is dus goed!</li>
+    </ul>
+    
+    <p>Wil je terug naar het overzicht? Klik dan bovenaan op <strong>"Terug naar overzicht"</strong>.</p>
+    
+    
+    <p>Je kunt nu op <strong>"Volgende stap"</strong> klikken om te beginnen.</p>
+    """, unsafe_allow_html=True)
+    if st.button("Volgende stap"):
+        st.session_state.intro_stage = 'explore'
+        st.rerun()
+
+elif st.session_state.intro_stage == 'explore' and st.session_state.selected_index is None:
     st.subheader("Selecteer een woning om details te bekijken")
+    st.markdown("""
+    Op de volgender pagina kun je door de projecten bladeren en er eentje kiezen die je interessant vindt.  
+    Kijk goed naar de eigenschappen zoals **prijs**, **grootte**, **locatie**, enzovoort, en vergelijk die met de **aanbevelingen** die je krijgt.
+     
+    **Komen de aanbevelingen overeen met wat je verwacht? Zijn ze relevant?**  
+    
+    Heb je het project vergeleken? Klik dan bovenaan op **Volgende stap** om verder te gaan.
+    """)
+    if st.button("Bekijk woningen"):
+        st.session_state.intro_stage = 'choose'
+        st.rerun()
+
+elif st.session_state.intro_stage == 'choose' and st.session_state.selected_index is None:
     cols = st.columns(2)
     for i, row in merged_df.iterrows():
         with cols[i % 2]:
             render_card(row, i)
+
+elif st.session_state.intro_stage == 'adjust' and st.session_state.selected_index is None:
+    # Second half of second page, with sidebar open and project cards visible
+    st.subheader("Pas je voorkeuren aan")
+    st.markdown("""
+     
+    Hier kun je aangeven hoe belangrijk elke eigenschap voor jou is.
+
+    - **Wil je dat prijs zwaarder meetelt?** Schuif de waarde meer naar rechts (richting 1).
+    - **Wil je dat een eigenschap minder belangrijk is?** Schuif de waarde naar links (richting 0).
+
+    Klik daarna op een nieuw project en bekijk de aanbevelingen opnieuw.  
+    **Zijn ze nu beter afgestemd?**  
+    Doe dit een paar keer zodat je een goed beeld krijgt van hoe het systeem werkt.
+
+    Je kunt daarna **terug naar de vragenlijst** en deze invullen.
+    """)
+
+    if st.button("Bekijk woningen"):
+        st.session_state.intro_stage = 'final'
+        st.rerun()
+
+elif st.session_state.intro_stage == 'final' and st.session_state.selected_index is None:
+    cols = st.columns(2)
+    for i, row in merged_df.iterrows():
+        with cols[i % 2]:
+            render_card(row, i)
+
 else:
     selected_index = st.session_state.selected_index
     selected_row = merged_df.iloc[selected_index]
-
-    if st.button("🔙 Terug naar overzicht"):
-        st.session_state.selected_index = None
-        st.rerun()
+    if st.session_state.intro_stage == 'choose':
+        if st.button("Volgende stap"):
+            st.session_state.intro_stage = 'adjust'
+            st.session_state.selected_index = None
+            st.rerun()
+    else:
+        if st.button("🔙 Terug naar overzicht"):
+            st.session_state.selected_index = None
+            st.rerun()
 
     st.subheader("Woningdetails")
     st.markdown(f"""
